@@ -25,7 +25,7 @@ def pick_apk_callback():
     os.system("adb install " + filename)
 
 
-Pick = Tkinter.Button(top, bg="#000000", text="Pick file", command=pick_apk_callback())
+Pick = Tkinter.Button(top, bg="#000000", text="Pick file", command=pick_apk_callback)
 Disconnect = Tkinter.Button(top, bg="#000000", text="ADB disconnect", command=disconnect_call_back)
 Uninstall = Tkinter.Button(top, bg="#000000", text="ADB uninstall", command=uninstall_call_back)
 Reboot = Tkinter.Button(top, bg="#000000", text="ADB reboot", command=reboot_call_back)
