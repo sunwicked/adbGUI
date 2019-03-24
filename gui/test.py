@@ -4,6 +4,7 @@ from tkinter import filedialog
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 PACKAGE_FILE_PATH = dir_path + "/name.txt"
+LOGCAT_FILE_PATH = dir_path + "/log.txt"
 
 top = tkinter.Tk()
 
@@ -40,6 +41,10 @@ def uninstall_call_back():
     os.system("adb uninstall" + package)  # get package name
 
 
+def logcat_to_file_callback():
+    os.system("adb logcat > " + LOGCAT_FILE_PATH)  # get package name
+
+
 Label = tkinter.Label(top, text="Enter IP")
 Label.grid(row=0, column=0)
 
@@ -56,5 +61,7 @@ Uninstall = tkinter.Button(top, bg="#000000", text="ADB uninstall", command=unin
 Uninstall.grid(row=4, column=0)
 Reboot = tkinter.Button(top, bg="#000000", text="ADB reboot", command=reboot_call_back)
 Reboot.grid(row=5, column=0)
+Logcat = tkinter.Button(top, bg="#000000", text="ADB logcat", command=logcat_to_file_callback)
+Logcat.grid(row=6, column=0)
 
 top.mainloop()
