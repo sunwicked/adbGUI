@@ -36,13 +36,16 @@ def pick_apk_callback():
         print("failed")
 
 
-def uninstall_call_back():
+def clear_call_back():
     print(package)
     os.system("adb uninstall" + package)  # get package name
 
 
 def logcat_to_file_callback():
     os.system("adb logcat > " + LOGCAT_FILE_PATH)  # get package name
+
+def logcat_to_file_callback():
+    os.system("adb shell pm clear " + package)  # get package name
 
 
 Label = tkinter.Label(top, text="Enter IP")
@@ -55,13 +58,17 @@ Connect = tkinter.Button(top, text="ADB connect", command=connect_call_back)
 Connect.grid(row=0, column=2)
 Pick = tkinter.Button(top, bg="#000000", text="ADB install", command=pick_apk_callback)
 Pick.grid(row=2, column=0)
+IpLabel = tkinter.Label(top, text=" Package Name")
+IpLabel.grid(row=2, column=1)
 Disconnect = tkinter.Button(top, bg="#000000", text="ADB disconnect", command=disconnect_call_back)
 Disconnect.grid(row=3, column=0)
 Uninstall = tkinter.Button(top, bg="#000000", text="ADB uninstall", command=uninstall_call_back)
 Uninstall.grid(row=4, column=0)
 Reboot = tkinter.Button(top, bg="#000000", text="ADB reboot", command=reboot_call_back)
 Reboot.grid(row=5, column=0)
+Clear = tkinter.Button(top, bg="#000000", text="ADB clear", command=clear_call_back)
+Clear.grid(row=6, column=0)
 Logcat = tkinter.Button(top, bg="#000000", text="ADB logcat", command=logcat_to_file_callback)
-Logcat.grid(row=6, column=0)
+Logcat.grid(row=7, column=0)
 
 top.mainloop()
