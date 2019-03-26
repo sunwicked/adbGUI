@@ -1,9 +1,10 @@
+import subprocess
 import os
+import sys
 import tkinter
 from tkinter import filedialog
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-PACKAGE_FILE_PATH = dir_path + "/name.txt"
 LOGCAT_FILE_PATH = dir_path + "/log.txt"
 
 top = tkinter.Tk()
@@ -26,25 +27,32 @@ def reboot_call_back():
 
 def pick_apk_callback():
     filename = filedialog.askopenfilename(initialdir="/", title="Select file")
-    os.system("aapt dump badging " + filename + " | awk 'NR==1{print $2}' > " + PACKAGE_FILE_PATH)
-    f = open(PACKAGE_FILE_PATH, 'r')
-    if not filename:
-        global package
-        package = f.read().split("'")[1]
-        os.system("adb install " + filename)
+    # cmd  = "aapt dump badging " + filename + " | awk 'NR==1{print $2}'"
+    global package
+    package = subprocess.run(
+        ['aapt', 'dump', 'badging', filename],
+        stdout=subprocess.PIPE
+    )
+    std_out = str(package.stdout)
+    if std_out:
+        package = std_out.split("versionCode")[0]
+        package = package.split("'")[1]
+        subprocess.run(
+            ['adb', 'install', filename],
+            stdout=subprocess.PIPE)
     else:
         print("failed")
 
 
-def clear_call_back():
-    print(package)
+def uninstall_call_back():
     os.system("adb uninstall" + package)  # get package name
 
 
 def logcat_to_file_callback():
     os.system("adb logcat > " + LOGCAT_FILE_PATH)  # get package name
 
-def logcat_to_file_callback():
+
+def clear_call_back():
     os.system("adb shell pm clear " + package)  # get package name
 
 
