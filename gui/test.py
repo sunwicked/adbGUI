@@ -17,6 +17,11 @@ def disconnect_call_back():
     convert_to_str(console_log)
 
 
+def devices_call_back():
+    console_log = subprocess.run(['adb', 'devices'], stdout=subprocess.PIPE)
+    convert_to_str(console_log)
+
+
 def connect_call_back():
     global ip
     ip = entry.get()
@@ -50,8 +55,19 @@ def pick_apk_callback():
 
 
 def uninstall_call_back():
-    console_log = subprocess.run(['adb', 'uninstall', package], stdout=subprocess.PIPE)
-    convert_to_str(console_log)
+    console_log = subprocess.run(['adb', 'devices'], stdout=subprocess.PIPE)
+    val = str(console_log.stdout)
+    if val.__contains__("device"):
+        if package != "test":
+            console_log = subprocess.run(['adb', 'uninstall', package], stdout=subprocess.PIPE)
+            convert_to_str(console_log)
+        elif entry_package.get():
+            console_log = subprocess.run(['adb', 'uninstall', entry_package.get()], stdout=subprocess.PIPE)
+            convert_to_str(console_log)
+        else:
+            log_value['text'] = "Incorrect package name test"
+    else:
+        log_value['text'] = "No devices found"
 
 
 def logcat_to_file_callback():
@@ -80,14 +96,20 @@ pick.grid(row=2, column=0)
 
 disconnect = tkinter.Button(top, bg="#000000", text=" ADB disconnect ", command=disconnect_call_back)
 disconnect.grid(row=3, column=0)
-uninstall = tkinter.Button(top, bg="#000000", text=" ADB uninstall ", command=uninstall_call_back)
-uninstall.grid(row=4, column=0)
+
+log_cat = tkinter.Button(top, bg="#000000", text=" ADB logcat ", command=logcat_to_file_callback)
+log_cat.grid(row=3, column=1)
+
 reboot = tkinter.Button(top, bg="#000000", text=" ADB reboot ", command=reboot_call_back)
-reboot.grid(row=5, column=0)
+reboot.grid(row=4, column=0)
 clear = tkinter.Button(top, bg="#000000", text=" ADB clear ", command=clear_call_back)
-clear.grid(row=6, column=0)
-# Logcat = tkinter.Button(top, bg="#000000", text="ADB logcat", command=logcat_to_file_callback)
-# Logcat.grid(row=7, column=0)
+clear.grid(row=4, column=1)
+devices = tkinter.Button(top, bg="#000000", text=" ADB devices ", command=devices_call_back)
+devices.grid(row=5, column=0)
+uninstall = tkinter.Button(top, bg="#000000", text=" ADB uninstall ", command=uninstall_call_back)
+uninstall.grid(row=7, column=0)
+entry_package = tkinter.Entry(top)
+entry_package.grid(row=7, column=1)
 ip_label = tkinter.Label(top, text=" IP::")
 ip_label.grid(row=8, column=0)
 ip_value = tkinter.Label(top, text=ip)
