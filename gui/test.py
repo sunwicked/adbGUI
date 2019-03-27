@@ -55,9 +55,7 @@ def pick_apk_callback():
 
 
 def uninstall_call_back():
-    console_log = subprocess.run(['adb', 'devices'], stdout=subprocess.PIPE)
-    val = str(console_log.stdout)
-    if val.__contains__("device"):
+    if is_device_connected():
         if package != "test":
             console_log = subprocess.run(['adb', 'uninstall', package], stdout=subprocess.PIPE)
             convert_to_str(console_log)
@@ -71,7 +69,10 @@ def uninstall_call_back():
 
 
 def logcat_to_file_callback():
-    os.system("adb logcat > " + LOGCAT_FILE_PATH)  # get package name
+    if is_device_connected():
+        os.system("adb logcat > " + LOGCAT_FILE_PATH)  # get package name
+    else:
+        log_value['text'] = "No devices found"
 
 
 def clear_call_back():
@@ -81,6 +82,12 @@ def clear_call_back():
 
 def convert_to_str(input_val):
     log_value['text'] = str(input_val.stdout)
+
+
+def is_device_connected():
+    console_log = subprocess.run(['adb', 'devices'], stdout=subprocess.PIPE)
+    val = str(console_log.stdout)
+    return val.__contains__("connected")
 
 
 label = tkinter.Label(top, text=" Enter IP ")
