@@ -75,9 +75,18 @@ def uninstall_call_back():
 
 def log_cat_to_file_callback():
     if is_device_connected():
-        os.system("adb logcat > " + LOG_CAT_FILE_PATH)  # get package name
+        with open(LOG_CAT_FILE_PATH, "wb", 0) as out:
+            global proc
+            proc = subprocess.Popen('adb logcat', stdout=out, shell=True)
+            # subprocess.run(["adb", "logcat"], stdout=out, check=True)
+            # os.system("adb logcat > " + LOG_CAT_FILE_PATH)  # get package name
     else:
         log_value['text'] = "No devices found"
+
+
+def log_cat_stop_to_file_callback():
+    global proc
+    proc.terminate()
 
 
 def clear_call_back():
@@ -110,9 +119,6 @@ pick.grid(row=2, column=0)
 disconnect = tkinter.Button(top, bg="#000000", text=" ADB disconnect ", command=disconnect_call_back)
 disconnect.grid(row=3, column=0)
 
-log_cat = tkinter.Button(top, bg="#000000", text=" ADB logcat ", command=log_cat_to_file_callback)
-log_cat.grid(row=3, column=1)
-
 reboot = tkinter.Button(top, bg="#000000", text=" ADB reboot ", command=reboot_call_back)
 reboot.grid(row=4, column=0)
 clear = tkinter.Button(top, bg="#000000", text=" ADB clear ", command=clear_call_back)
@@ -120,6 +126,12 @@ clear.grid(row=4, column=1)
 devices = tkinter.Button(top, bg="#000000", text=" ADB devices ", command=devices_call_back)
 devices.grid(row=5, column=0)
 uninstall = tkinter.Button(top, bg="#000000", text=" ADB uninstall ", command=uninstall_call_back)
+
+log_cat = tkinter.Button(top, bg="#000000", text=" ADB logcat ", command=log_cat_to_file_callback)
+log_cat.grid(row=6, column=0)
+log_cat_stop = tkinter.Button(top, bg="#000000", text=" ADB logcat stop ", command=log_cat_stop_to_file_callback)
+log_cat_stop.grid(row=6, column=1)
+
 uninstall.grid(row=7, column=0)
 entry_package = tkinter.Entry(top)
 entry_package.grid(row=7, column=1)
