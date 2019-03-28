@@ -78,6 +78,7 @@ def log_cat_to_file_callback():
         global log_cat_file_path
         log_cat_file_path = dir_path + "/" + str(datetime.now().microsecond) + ".txt"
         with open(log_cat_file_path, "wb", 0) as out:
+            log_cat_stop['state'] = 'normal'
             global proc
             proc = subprocess.Popen('adb logcat', stdout=out, shell=True)
             log_value['text'] = "Logging to" + log_cat_file_path
@@ -90,6 +91,7 @@ def log_cat_stop_to_file_callback():
     proc.terminate()
     global log_cat_file_path
     log_value['text'] = "Logging stopped " + log_cat_file_path
+    log_cat_stop['state'] = 'disabled'
 
 
 def clear_call_back():
@@ -132,7 +134,8 @@ uninstall = tkinter.Button(top, bg="#000000", text=" ADB uninstall ", command=un
 
 log_cat = tkinter.Button(top, bg="#000000", text=" ADB logcat ", command=log_cat_to_file_callback)
 log_cat.grid(row=6, column=0)
-log_cat_stop = tkinter.Button(top, bg="#000000", text=" ADB logcat stop ", command=log_cat_stop_to_file_callback)
+log_cat_stop = tkinter.Button(top, bg="#000000", text=" ADB logcat stop ", state="disabled",
+                              command=log_cat_stop_to_file_callback)
 log_cat_stop.grid(row=6, column=1)
 
 uninstall.grid(row=7, column=0)
