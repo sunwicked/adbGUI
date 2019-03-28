@@ -4,6 +4,8 @@ import tkinter
 from tkinter import filedialog
 from datetime import datetime
 
+font_size = 12
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_cat_file_path = dir_path + "/" + str(datetime.now().microsecond) + ".txt"
 ip = "0.0.0.0:5555"
@@ -110,7 +112,8 @@ def is_device_connected():
 
 
 # UI for label and  button
-label = tkinter.Label(top, text=" Enter IP ")
+font_style = ('Helvetica', font_size, 'bold')
+label = tkinter.Label(top, text=" Enter IP ", font=font_style)
 label.grid(row=0, column=0)
 
 entry = tkinter.Entry(top)
@@ -141,15 +144,15 @@ log_cat_stop.grid(row=6, column=1)
 uninstall.grid(row=7, column=0)
 entry_package = tkinter.Entry(top)
 entry_package.grid(row=7, column=1)
-ip_label = tkinter.Label(top, text=" IP::")
+ip_label = tkinter.Label(top, text=" IP::", font=font_style)
 ip_label.grid(row=8, column=0)
 ip_value = tkinter.Label(top, text=ip)
 ip_value.grid(row=8, column=1)
-package_label = tkinter.Label(top, text=" Package Name::")
+package_label = tkinter.Label(top, text=" Package Name::", font=font_style)
 package_label.grid(row=9, column=0)
 package_value = tkinter.Label(top, text=package)
 package_value.grid(row=9, column=1)
-log_label = tkinter.Label(top, text=" Log::")
+log_label = tkinter.Label(top, text=" Log::", font=font_style)
 log_label.grid(row=10, column=0)
 log_value = tkinter.Label(top, text=log)
 log_value.grid(row=10, column=1)
