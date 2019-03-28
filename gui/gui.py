@@ -4,6 +4,8 @@ import tkinter
 from tkinter import filedialog
 from datetime import datetime
 
+BUTTON_WIDTH = 20
+
 font_size = 12
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -113,31 +115,31 @@ def is_device_connected():
 
 # UI for label and  button
 font_style = ('Helvetica', font_size, 'bold')
-label = tkinter.Label(top, text=" Enter IP ", font=font_style)
+label = tkinter.Label(top, text=" Enter IP:: ", font=font_style)
 label.grid(row=0, column=0)
 
 entry = tkinter.Entry(top)
 entry.grid(row=0, column=1)
 
-connect = tkinter.Button(top, text="ADB connect", command=connect_call_back)
+connect = tkinter.Button(top, text="ADB connect", width=BUTTON_WIDTH, command=connect_call_back)
 connect.grid(row=0, column=2)
-pick = tkinter.Button(top, bg="#000000", text=" ADB install ", command=pick_apk_callback)
+pick = tkinter.Button(top, bg="#000000", text=" ADB install ", width=BUTTON_WIDTH, command=pick_apk_callback)
 pick.grid(row=2, column=0)
 
-disconnect = tkinter.Button(top, bg="#000000", text=" ADB disconnect ", command=disconnect_call_back)
+disconnect = tkinter.Button(top, bg="#000000", text=" ADB disconnect ", width=BUTTON_WIDTH, command=disconnect_call_back)
 disconnect.grid(row=3, column=0)
 
-reboot = tkinter.Button(top, bg="#000000", text=" ADB reboot ", command=reboot_call_back)
+reboot = tkinter.Button(top, bg="#000000", text=" ADB reboot ", width=BUTTON_WIDTH, command=reboot_call_back)
 reboot.grid(row=4, column=0)
-clear = tkinter.Button(top, bg="#000000", text=" ADB clear ", command=clear_call_back)
+clear = tkinter.Button(top, bg="#000000", text=" ADB clear ", width=BUTTON_WIDTH, command=clear_call_back)
 clear.grid(row=4, column=1)
-devices = tkinter.Button(top, bg="#000000", text=" ADB devices ", command=devices_call_back)
+devices = tkinter.Button(top, bg="#000000", text=" ADB devices ", width=BUTTON_WIDTH, command=devices_call_back)
 devices.grid(row=5, column=0)
-uninstall = tkinter.Button(top, bg="#000000", text=" ADB uninstall ", command=uninstall_call_back)
+uninstall = tkinter.Button(top, bg="#000000", text=" ADB uninstall ", width=BUTTON_WIDTH, command=uninstall_call_back)
 
-log_cat = tkinter.Button(top, bg="#000000", text=" ADB logcat ", command=log_cat_to_file_callback)
+log_cat = tkinter.Button(top, bg="#000000", text=" ADB logcat ", width=BUTTON_WIDTH, command=log_cat_to_file_callback)
 log_cat.grid(row=6, column=0)
-log_cat_stop = tkinter.Button(top, bg="#000000", text=" ADB logcat stop ", state="disabled",
+log_cat_stop = tkinter.Button(top, bg="#000000", text=" ADB logcat stop ", width=BUTTON_WIDTH, state="disabled",
                               command=log_cat_stop_to_file_callback)
 log_cat_stop.grid(row=6, column=1)
 
