@@ -5,7 +5,7 @@ from tkinter import filedialog
 from datetime import datetime
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-LOG_CAT_FILE_PATH = dir_path + "/" + str(datetime.now().microsecond) + ".txt"
+log_cat_file_path = dir_path + "/" + str(datetime.now().microsecond) + ".txt"
 ip = "0.0.0.0:5555"
 package = "test"
 log = ""
@@ -75,11 +75,12 @@ def uninstall_call_back():
 
 def log_cat_to_file_callback():
     if is_device_connected():
-        with open(LOG_CAT_FILE_PATH, "wb", 0) as out:
+        global log_cat_file_path
+        log_cat_file_path = dir_path + "/" + str(datetime.now().microsecond) + ".txt"
+        with open(log_cat_file_path, "wb", 0) as out:
             global proc
             proc = subprocess.Popen('adb logcat', stdout=out, shell=True)
-            # subprocess.run(["adb", "logcat"], stdout=out, check=True)
-            # os.system("adb logcat > " + LOG_CAT_FILE_PATH)  # get package name
+            log_value['text'] = "Logging to" + log_cat_file_path
     else:
         log_value['text'] = "No devices found"
 
@@ -87,6 +88,8 @@ def log_cat_to_file_callback():
 def log_cat_stop_to_file_callback():
     global proc
     proc.terminate()
+    global log_cat_file_path
+    log_value['text'] = "Logging stopped " + log_cat_file_path
 
 
 def clear_call_back():
