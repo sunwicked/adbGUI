@@ -1,18 +1,20 @@
-import subprocess
 import os
+import subprocess
 import tkinter
-from tkinter import filedialog
 from datetime import datetime
+from tkinter import filedialog
 
 BUTTON_WIDTH = 20
+BUTTON_HEIGHT = 2
 
-font_size = 12
+font_size = 14
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_cat_file_path = dir_path + "/" + str(datetime.now().microsecond) + ".txt"
 ip = "0.0.0.0:5555"
 package = "test"
 log = ""
+push_location = "/sdcard/amazon.sdktester.json"
 
 top = tkinter.Tk()
 
@@ -30,14 +32,13 @@ def devices_call_back():
 def connect_call_back():
     global ip
     ip = entry.get()
-    ip_value['text'] = ip
-    console_log = subprocess.run(['adb', 'connect', 'ip'], stdout=subprocess.PIPE)
+    ip_value['text'] = ip + ":5555"
+    console_log = subprocess.run(['adb', 'connect', ip], stdout=subprocess.PIPE)
     convert_to_str(console_log)
 
 
 def reboot_call_back():
-    console_log = subprocess.run(['adb', 'reboot'], stdout=subprocess.PIPE)
-    convert_to_str(console_log)
+    subprocess.run(['adb', 'reboot'], stdout=subprocess.PIPE)
 
 
 def pick_apk_callback():
@@ -59,6 +60,16 @@ def pick_apk_callback():
 
         else:
             print("failed")
+    else:
+        log_value['text'] = "No devices found"
+
+
+def push_file_callback():
+    if is_device_connected():
+        filename = filedialog.askopenfilename(initialdir="/", title="Select file")
+        subprocess.run(
+            ['adb', 'push', filename, push_location],
+            stdout=subprocess.PIPE)
     else:
         log_value['text'] = "No devices found"
 
@@ -115,31 +126,44 @@ def is_device_connected():
 
 # UI for label and  button
 font_style = ('Helvetica', font_size, 'bold')
-label = tkinter.Label(top, text=" Enter IP:: ", font=font_style)
+label = tkinter.Label(top, text=" Enter TV IP:: ", font=font_style)
 label.grid(row=0, column=0)
 
 entry = tkinter.Entry(top)
 entry.grid(row=0, column=1)
 
-connect = tkinter.Button(top, text="ADB connect", width=BUTTON_WIDTH, command=connect_call_back)
+connect = tkinter.Button(top, text="ADB connect", width=BUTTON_WIDTH, height=BUTTON_HEIGHT, command=connect_call_back)
 connect.grid(row=0, column=2)
-pick = tkinter.Button(top, bg="#000000", text=" ADB install ", width=BUTTON_WIDTH, command=pick_apk_callback)
+pick = tkinter.Button(top, bg="#000000", text=" ADB install ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                      command=pick_apk_callback)
 pick.grid(row=2, column=0)
 
-disconnect = tkinter.Button(top, bg="#000000", text=" ADB disconnect ", width=BUTTON_WIDTH, command=disconnect_call_back)
-disconnect.grid(row=3, column=0)
+disconnect = tkinter.Button(top, bg="#000000", text=" ADB disconnect ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                            command=disconnect_call_back)
+disconnect.grid(row=2, column=2)
 
-reboot = tkinter.Button(top, bg="#000000", text=" ADB reboot ", width=BUTTON_WIDTH, command=reboot_call_back)
+reboot = tkinter.Button(top, bg="#000000", text=" ADB reboot ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                        command=reboot_call_back)
 reboot.grid(row=4, column=0)
-clear = tkinter.Button(top, bg="#000000", text=" ADB clear ", width=BUTTON_WIDTH, command=clear_call_back)
+clear = tkinter.Button(top, bg="#000000", text=" ADB clear ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                       command=clear_call_back)
 clear.grid(row=4, column=1)
-devices = tkinter.Button(top, bg="#000000", text=" ADB devices ", width=BUTTON_WIDTH, command=devices_call_back)
-devices.grid(row=5, column=0)
-uninstall = tkinter.Button(top, bg="#000000", text=" ADB uninstall ", width=BUTTON_WIDTH, command=uninstall_call_back)
 
-log_cat = tkinter.Button(top, bg="#000000", text=" ADB logcat ", width=BUTTON_WIDTH, command=log_cat_to_file_callback)
+push = tkinter.Button(top, bg="#000000", text=" ADB push ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                       command=push_file_callback)
+push.grid(row=4, column=2)
+
+devices = tkinter.Button(top, bg="#000000", text=" ADB devices ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                         command=devices_call_back)
+devices.grid(row=2, column=1)
+uninstall = tkinter.Button(top, bg="#000000", text=" ADB uninstall ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                           command=uninstall_call_back)
+
+log_cat = tkinter.Button(top, bg="#000000", text=" ADB logcat ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                         command=log_cat_to_file_callback)
 log_cat.grid(row=6, column=0)
-log_cat_stop = tkinter.Button(top, bg="#000000", text=" ADB logcat stop ", width=BUTTON_WIDTH, state="disabled",
+log_cat_stop = tkinter.Button(top, bg="#000000", text=" ADB logcat stop ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                              state="disabled",
                               command=log_cat_stop_to_file_callback)
 log_cat_stop.grid(row=6, column=1)
 
@@ -154,7 +178,8 @@ package_label = tkinter.Label(top, text=" Package Name::", font=font_style)
 package_label.grid(row=9, column=0)
 package_value = tkinter.Label(top, text=package)
 package_value.grid(row=9, column=1)
-log_label = tkinter.Label(top, text=" Log::", font=font_style)
+numberOfScreenUnits = 100
+log_label = tkinter.Label(top, text=" Log::", font=font_style, wraplength=numberOfScreenUnits)
 log_label.grid(row=10, column=0)
 log_value = tkinter.Label(top, text=log)
 log_value.grid(row=10, column=1)
