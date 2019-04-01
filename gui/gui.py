@@ -14,7 +14,7 @@ log_cat_file_path = dir_path + "/" + str(datetime.now().microsecond) + ".txt"
 ip = "0.0.0.0:5555"
 package = "test"
 log = ""
-push_location = "/sdcard/amazon.sdktester.json"
+push_location = "/sdcard/"
 
 top = tkinter.Tk()
 
