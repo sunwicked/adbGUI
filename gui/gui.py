@@ -64,7 +64,7 @@ def pick_apk_callback():
             subprocess.Popen(
                 ['adb', 'install', filename],
                 stdout=subprocess.PIPE)
-
+            log_value['text'] = "Installing  apk... Check app list"
         else:
             print("failed")
     else:
