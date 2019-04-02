@@ -39,23 +39,29 @@ def connect_call_back():
 
 
 def reboot_call_back():
-    subprocess.run(['adb', 'reboot'], stdout=subprocess.PIPE)
+    if is_device_connected():
+        subprocess.Popen(['adb', 'reboot'],
+                         stdout=subprocess.PIPE)
+        log_value['text'] = "Rebooting   device"
+    else:
+        log_value['text'] = "No devices found"
+
 
 
 def pick_apk_callback():
     if is_device_connected():
         filename = filedialog.askopenfilename(initialdir="/", title="Select file")
         global package
-        package = subprocess.run(
-            ['aapt', 'dump', 'badging', filename],
-            stdout=subprocess.PIPE
-        )
-        std_out = str(package.stdout)
+        proc = subprocess.Popen(['aapt', 'dump', 'badging', filename],
+                                stdout=subprocess.PIPE)
+        package = proc.stdout.readline()
+        proc.terminate()
+        std_out = str(package)
         if std_out:
             package = std_out.split("versionCode")[0]
             package = package.split("'")[1]
             package_value['text'] = package
-            subprocess.run(
+            subprocess.Popen(
                 ['adb', 'install', filename],
                 stdout=subprocess.PIPE)
 
@@ -151,7 +157,7 @@ clear = tkinter.Button(top, bg="#000000", text=" ADB clear ", width=BUTTON_WIDTH
 clear.grid(row=4, column=1)
 
 push = tkinter.Button(top, bg="#000000", text=" ADB push ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
-                       command=push_file_callback)
+                      command=push_file_callback)
 push.grid(row=4, column=2)
 
 devices = tkinter.Button(top, bg="#000000", text=" ADB devices ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
