@@ -8,6 +8,8 @@ BUTTON_WIDTH = 20
 BUTTON_HEIGHT = 2
 
 font_size = 14
+numberOfScreenUnits = 80
+
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_cat_file_path = dir_path + "/" + str(datetime.now().microsecond) + ".txt"
@@ -17,7 +19,6 @@ log = ""
 push_location = "/sdcard/"
 
 top = tkinter.Tk()
-
 
 def disconnect_call_back():
     console_log = subprocess.run(['adb', 'disconnect'], stdout=subprocess.PIPE)
@@ -178,7 +179,7 @@ package_label = tkinter.Label(top, text=" Package Name::", font=font_style)
 package_label.grid(row=9, column=0)
 package_value = tkinter.Label(top, text=package)
 package_value.grid(row=9, column=1)
-numberOfScreenUnits = 100
+
 log_label = tkinter.Label(top, text=" Log::", font=font_style, wraplength=numberOfScreenUnits)
 log_label.grid(row=10, column=0)
 log_value = tkinter.Label(top, text=log)
