@@ -10,7 +10,6 @@ BUTTON_HEIGHT = 2
 font_size = 14
 numberOfScreenUnits = 80
 
-
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_cat_file_path = dir_path + "/" + str(datetime.now().microsecond) + ".txt"
 ip = "0.0.0.0:5555"
@@ -19,6 +18,7 @@ log = ""
 push_location = "/sdcard/"
 
 top = tkinter.Tk()
+
 
 def disconnect_call_back():
     console_log = subprocess.run(['adb', 'disconnect'], stdout=subprocess.PIPE)
@@ -45,7 +45,6 @@ def reboot_call_back():
         log_value['text'] = "Rebooting   device"
     else:
         log_value['text'] = "No devices found"
-
 
 
 def pick_apk_callback():
@@ -77,6 +76,21 @@ def push_file_callback():
         subprocess.run(
             ['adb', 'push', filename, push_location],
             stdout=subprocess.PIPE)
+    else:
+        log_value['text'] = "No devices found"
+
+
+def screen_shot_callback():
+    if is_device_connected():
+        file_name = str(datetime.now().microsecond)
+        pull_location = "/sdcard" + "/" + file_name + ".png"
+        file_path = dir_path + "/" + file_name + ".png"
+        subprocess.run(['adb', 'shell', 'screencap', pull_location],
+                       stdout=subprocess.PIPE)
+        subprocess.run(
+            ['adb', 'pull', pull_location, file_path],
+            stdout=subprocess.PIPE)
+        log_value['text'] = "Screenshot:" + file_path
     else:
         log_value['text'] = "No devices found"
 
@@ -190,5 +204,9 @@ log_label = tkinter.Label(top, text=" Log::", font=font_style, wraplength=number
 log_label.grid(row=10, column=0)
 log_value = tkinter.Label(top, text=log)
 log_value.grid(row=10, column=1)
+
+push = tkinter.Button(top, bg="#000000", text=" ADB Screenshot ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                      command=screen_shot_callback)
+push.grid(row=11, column=0)
 
 top.mainloop()
