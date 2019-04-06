@@ -9,7 +9,7 @@ Screenshot:
 
 ![alt text][img]
 
-[img]: https://github.com/sunwicked/adbGUI/blob/master/screenshots/Screen%20Shot%202019-04-01%20at%208.44.33%20PM.png "ADB GUI MAC"
+[img]: https://github.com/sunwicked/adbGUI/blob/master/screenshots/Screen%20Shot%202019-04-06%20at%206.30.28%20PM.png "ADB GUI MAC"
 
 Known Issues:
 Python 2 : Buttons show no text -  Use python3
