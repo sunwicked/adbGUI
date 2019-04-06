@@ -10,6 +10,10 @@ Desktop client for adb commands inspired from adb idea plugin for android studio
 6. Adb reboot device
 7. Adb push file
 
+### Upcoming
+1. UI overhaul 
+2. Code restructuring 
+
 ### Setup
 1. Setup adb
 2. Setup aapt
@@ -22,4 +26,5 @@ Screenshot:
 
 Known Issues:
 Python 2 : Buttons show no text -  Use python3
+
 For connecting to a mobile device with ip : https://stackoverflow.com/questions/2604727/how-can-i-connect-to-android-with-adb-over-tcp
