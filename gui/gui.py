@@ -2,6 +2,7 @@ import os
 import subprocess
 import tkinter
 from datetime import datetime
+from time import sleep
 from tkinter import filedialog
 
 BUTTON_WIDTH = 20
@@ -91,6 +92,36 @@ def screen_shot_callback():
             ['adb', 'pull', pull_location, file_path],
             stdout=subprocess.PIPE)
         log_value['text'] = "Screenshot:" + file_path
+    else:
+        log_value['text'] = "No devices found"
+
+
+def record_start_callback():
+    if is_device_connected():
+        file_name = str(datetime.now().microsecond)
+        global pull_location
+        pull_location = "/sdcard" + "/" + file_name + ".mp4"
+        global file_path
+        file_path = dir_path + "/" + file_name + ".mp4"
+        global proc_record
+        proc_record = subprocess.Popen(['adb', 'shell', 'screenrecord', pull_location],
+                                       stdout=subprocess.PIPE)
+        log_value['text'] = "Recording started"
+    else:
+        log_value['text'] = "No devices found"
+
+
+def record_stop_callback():
+    if is_device_connected():
+        global pull_location
+        global file_path
+        global proc_record
+        proc_record.terminate()
+        sleep(2)
+        subprocess.run(
+            ['adb', 'pull', pull_location, file_path],
+            stdout=subprocess.PIPE)
+        log_value['text'] = file_path
     else:
         log_value['text'] = "No devices found"
 
@@ -205,8 +236,16 @@ log_label.grid(row=10, column=0)
 log_value = tkinter.Label(top, text=log)
 log_value.grid(row=10, column=1)
 
-push = tkinter.Button(top, bg="#000000", text=" ADB Screenshot ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
-                      command=screen_shot_callback)
-push.grid(row=11, column=0)
+screen_shot = tkinter.Button(top, bg="#000000", text=" ADB Screenshot ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                             command=screen_shot_callback)
+screen_shot.grid(row=11, column=0)
+
+record = tkinter.Button(top, bg="#000000", text=" ADB Record Start ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                        command=record_start_callback)
+record.grid(row=12, column=0)
+
+record_stop = tkinter.Button(top, bg="#000000", text=" ADB Record Stop ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+                             command=record_stop_callback)
+record_stop.grid(row=12, column=1)
 
 top.mainloop()
