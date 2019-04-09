@@ -222,30 +222,34 @@ log_cat_stop.grid(row=6, column=1)
 uninstall.grid(row=7, column=0)
 entry_package = tkinter.Entry(top)
 entry_package.grid(row=7, column=1)
-ip_label = tkinter.Label(top, text=" IP::", font=font_style)
-ip_label.grid(row=8, column=0)
-ip_value = tkinter.Label(top, text=ip)
-ip_value.grid(row=8, column=1)
-package_label = tkinter.Label(top, text=" Package Name::", font=font_style)
-package_label.grid(row=9, column=0)
-package_value = tkinter.Label(top, text=package)
-package_value.grid(row=9, column=1)
-
-log_label = tkinter.Label(top, text=" Log::", font=font_style, wraplength=numberOfScreenUnits)
-log_label.grid(row=10, column=0)
-log_value = tkinter.Label(top, text=log)
-log_value.grid(row=10, column=1)
 
 screen_shot = tkinter.Button(top, bg="#000000", text=" ADB Screenshot ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                              command=screen_shot_callback)
-screen_shot.grid(row=11, column=0)
+screen_shot.grid(row=9, column=0)
 
 record = tkinter.Button(top, bg="#000000", text=" ADB Record Start ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                         command=record_start_callback)
-record.grid(row=12, column=0)
+record.grid(row=10, column=0)
 
 record_stop = tkinter.Button(top, bg="#000000", text=" ADB Record Stop ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                              command=record_stop_callback)
-record_stop.grid(row=12, column=1)
+record_stop.grid(row=10, column=1)
+
+package_label = tkinter.Label(top, text=" Package Name::", font=font_style)
+package_label.grid(row=11, column=0)
+package_value = tkinter.Label(top, text=package)
+package_value.grid(row=11, column=1)
+
+ip_label = tkinter.Label(top, text=" IP::", font=font_style)
+ip_label.grid(row=12, column=0)
+ip_value = tkinter.Label(top, text=ip)
+ip_value.grid(row=12, column=1)
+
+log_label = tkinter.Label(top, text=" Log::", font=font_style, wraplength=numberOfScreenUnits)
+log_label.grid(row=13, column=0)
+log_value = tkinter.Label(top, text=log)
+log_value.grid(row=13, column=1)
+
+
 
 top.mainloop()
