@@ -5,6 +5,10 @@ from datetime import datetime
 from time import sleep
 from tkinter import filedialog
 
+PORT_NUMBER = "5555"
+
+SECS = 5
+
 BUTTON_WIDTH = 20
 BUTTON_HEIGHT = 2
 
@@ -34,7 +38,7 @@ def devices_call_back():
 def connect_call_back():
     global ip
     ip = entry.get()
-    ip_value['text'] = ip + ":5555"
+    ip_value['text'] = ip + ":" + PORT_NUMBER
     console_log = subprocess.run(['adb', 'connect', ip], stdout=subprocess.PIPE)
     convert_to_str(console_log)
 
@@ -117,7 +121,7 @@ def record_stop_callback():
         global file_path
         global proc_record
         proc_record.terminate()
-        sleep(5)
+        sleep(SECS)
         subprocess.run(
             ['adb', 'pull', pull_location, file_path],
             stdout=subprocess.PIPE)
