@@ -117,7 +117,7 @@ def record_stop_callback():
         global file_path
         global proc_record
         proc_record.terminate()
-        sleep(2)
+        sleep(5)
         subprocess.run(
             ['adb', 'pull', pull_location, file_path],
             stdout=subprocess.PIPE)
