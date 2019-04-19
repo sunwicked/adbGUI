@@ -5,6 +5,8 @@ from datetime import datetime
 from time import sleep
 from tkinter import filedialog
 
+BLACK = "#000000"
+
 PORT_NUMBER = "5555"
 
 SECS = 5
@@ -190,35 +192,35 @@ entry.grid(row=0, column=1)
 
 connect = tkinter.Button(top, text="ADB connect", width=BUTTON_WIDTH, height=BUTTON_HEIGHT, command=connect_call_back)
 connect.grid(row=0, column=2)
-pick = tkinter.Button(top, bg="#000000", text=" ADB install ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+pick = tkinter.Button(top, bg=BLACK, text=" ADB install ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                       command=pick_apk_callback)
 pick.grid(row=2, column=0)
 
-disconnect = tkinter.Button(top, bg="#000000", text=" ADB disconnect ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+disconnect = tkinter.Button(top, bg=BLACK, text=" ADB disconnect ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                             command=disconnect_call_back)
 disconnect.grid(row=2, column=2)
 
-reboot = tkinter.Button(top, bg="#000000", text=" ADB reboot ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+reboot = tkinter.Button(top, bg=BLACK, text=" ADB reboot ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                         command=reboot_call_back)
 reboot.grid(row=4, column=0)
-clear = tkinter.Button(top, bg="#000000", text=" ADB clear ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+clear = tkinter.Button(top, bg=BLACK, text=" ADB clear ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                        command=clear_call_back)
 clear.grid(row=4, column=1)
 
-push = tkinter.Button(top, bg="#000000", text=" ADB push ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+push = tkinter.Button(top, bg=BLACK, text=" ADB push ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                       command=push_file_callback)
 push.grid(row=4, column=2)
 
-devices = tkinter.Button(top, bg="#000000", text=" ADB devices ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+devices = tkinter.Button(top, bg=BLACK, text=" ADB devices ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                          command=devices_call_back)
 devices.grid(row=2, column=1)
-uninstall = tkinter.Button(top, bg="#000000", text=" ADB uninstall ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+uninstall = tkinter.Button(top, bg=BLACK, text=" ADB uninstall ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                            command=uninstall_call_back)
 
-log_cat = tkinter.Button(top, bg="#000000", text=" ADB logcat ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+log_cat = tkinter.Button(top, bg=BLACK, text=" ADB logcat ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                          command=log_cat_to_file_callback)
 log_cat.grid(row=6, column=0)
-log_cat_stop = tkinter.Button(top, bg="#000000", text=" ADB logcat stop ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+log_cat_stop = tkinter.Button(top, bg=BLACK, text=" ADB logcat stop ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                               state="disabled",
                               command=log_cat_stop_to_file_callback)
 log_cat_stop.grid(row=6, column=1)
@@ -227,33 +229,31 @@ uninstall.grid(row=7, column=0)
 entry_package = tkinter.Entry(top)
 entry_package.grid(row=7, column=1)
 
-screen_shot = tkinter.Button(top, bg="#000000", text=" ADB Screenshot ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+screen_shot = tkinter.Button(top, bg=BLACK, text=" ADB Screenshot ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                              command=screen_shot_callback)
 screen_shot.grid(row=9, column=0)
 
-record = tkinter.Button(top, bg="#000000", text=" ADB Record Start ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+record = tkinter.Button(top, bg=BLACK, text=" ADB Record Start ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                         command=record_start_callback)
 record.grid(row=10, column=0)
 
-record_stop = tkinter.Button(top, bg="#000000", text=" ADB Record Stop ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
+record_stop = tkinter.Button(top, bg=BLACK, text=" ADB Record Stop ", width=BUTTON_WIDTH, height=BUTTON_HEIGHT,
                              command=record_stop_callback)
 record_stop.grid(row=10, column=1)
 
 package_label = tkinter.Label(top, text=" Package Name::", font=font_style)
-package_label.grid(row=11, column=0)
+package_label.grid(row=13, column=0)
 package_value = tkinter.Label(top, text=package)
-package_value.grid(row=11, column=1)
+package_value.grid(row=13, column=1)
 
 ip_label = tkinter.Label(top, text=" IP::", font=font_style)
-ip_label.grid(row=12, column=0)
+ip_label.grid(row=14, column=0)
 ip_value = tkinter.Label(top, text=ip)
-ip_value.grid(row=12, column=1)
+ip_value.grid(row=14, column=1)
 
 log_label = tkinter.Label(top, text=" Log::", font=font_style, wraplength=numberOfScreenUnits)
-log_label.grid(row=13, column=0)
+log_label.grid(row=15, column=0)
 log_value = tkinter.Label(top, text=log)
-log_value.grid(row=13, column=1)
-
-
+log_value.grid(row=15, column=1)
 
 top.mainloop()
