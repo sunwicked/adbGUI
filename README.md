@@ -1,3 +1,6 @@
+New Modern KMM Desktop Version
+https://github.com/sunwicked/ADBguiKMM
+
 # adbGUI
 Desktop client for adb commands inspired from adb idea plugin for android studio 
 
